@@ -606,7 +606,7 @@ Each summary is formatted as
 The model reads the prompt as context, but the loss is computed only
 over story tokens and EOS. Prompt and padding positions are excluded:
 
-$$L_{\mathrm{SFT}}=-\frac{1}{N_{\mathrm{response}}}\sum_{\text{response positions }t}\log p_\theta(y_t\mid\text{prompt},y_{<t}).$$
+$$L_{\mathrm{SFT}}=-\frac{1}{N_{\mathrm{response}}}\sum_{\text{response positions }t}\log p_\theta(y_t \mid \text{prompt}, y_{<t}).$$
 
 [sft.py](../src/mini_ccgqa/sft.py) updates all model weights,
 without LoRA or other adapters. Training examples are shuffled each
