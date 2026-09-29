@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "model": {
+    "vocab_size": 2048,
+    "d_model": 192,
+    "layers": 6,
+    "d_ff": 512,
+    "attention_type": "ccgqa",
+    "q_heads": 8,
+    "kv_heads": 2,
+    "head_dim": 12,
+    "rope_theta": 10000.0,
+    "norm_eps": 1e-05,
+    "dropout": 0.0
+  },
+  "train": {
+    "total_steps": 12000,
+    "batch_size": 16,
+    "seq_len": 256,
+    "accumulation_steps": 1,
+    "seed": 42,
+    "eval_every": 250,
+    "save_every": 250,
+    "eval_batches": 16,
+    "max_lr": 0.0003,
+    "min_lr": 3e-05,
+    "warmup_fraction": 0.02,
+    "weight_decay": 0.05
+  },
+  "data": {
+    "dataset": "roneneldan/TinyStories",
+    "revision": "f54c09fd23315a6f9c86f9dc80f725de7d8f9c64",
+    "train_tokens": 530422724,
+    "validation_tokens": 3574993,
+    "tokenizer_sha256": "60ecf106e294757b8b0293afa9aceea8c97731b823873eeebba15a0b10bcd48d"
+  },
+  "num_params": 2461836,
+  "tokens_per_step": 4096,
+  "torch_version": "2.14.0+cu130"
+}

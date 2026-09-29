@@ -1,0 +1,42 @@
+{
+  "model": {
+    "vocab_size": 2048,
+    "d_model": 192,
+    "layers": 6,
+    "d_ff": 512,
+    "attention_type": "ccgqa_dynamic",
+    "q_heads": 8,
+    "kv_heads": 2,
+    "head_dim": 12,
+    "rope_theta": 10000.0,
+    "norm_eps": 1e-05,
+    "dropout": 0.0
+  },
+  "train": {
+    "base_sha256": "301ec391448577dacbb86e46d6648e5854d5d7309b8e4fc77149ea8dffb56326",
+    "tokenizer_sha256": "60ecf106e294757b8b0293afa9aceea8c97731b823873eeebba15a0b10bcd48d",
+    "dataset": "aditya-6122/tiny-stories-instruct",
+    "revision": "5eecccd2954de4a3f1ac5ac2b0fb13ee9a2d7ae9",
+    "train_sha256": "fa9a3b7952020f748006066a7d87c13f4b62e640b6c705471d75f7a6eb102904",
+    "val_sha256": "eba8b4169a6fc0ff9036dd2bee18b4377880f14353288451bed136b32f9642a7",
+    "train_size": 10000,
+    "val_size": 500,
+    "epochs": 4,
+    "batch_size": 16,
+    "total_steps": 2500,
+    "max_lr": 0.0003,
+    "min_lr": 2.9999999999999997e-05,
+    "warmup_fraction": 0.04,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "eval_every": 125,
+    "max_length": 256,
+    "method": "full_sft",
+    "task": "summary_to_story"
+  },
+  "num_params": 2471076,
+  "base_run": "/Users/shoaibakhtar/Developer/mini-ccgqa/runs/base/2.47M-ccgqa_dynamic-tinystories-d192-ff512-l6-q8-kv2-hd12-v2048-drop0-seq256-seed42-d4c0d6d5d0f6",
+  "base_step": 12000,
+  "data_dir": "/Users/shoaibakhtar/Developer/mini-ccgqa/data/sft_summary_hf",
+  "torch_version": "2.14.0"
+}

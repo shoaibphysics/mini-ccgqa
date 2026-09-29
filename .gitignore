@@ -1,0 +1,24 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Large tokenized datasets
+data/train.bin
+data/validation.bin
+
+# Downloaded SFT cache
+data/hf_sft_cache/
+
+# Prepared SFT training examples
+data/sft_summary_hf/train.jsonl
+
+
+.DS_Store
+

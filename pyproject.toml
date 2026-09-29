@@ -1,0 +1,24 @@
+[project]
+name = "mini-ccgqa"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "shoaibphysicspwd", email = "shoaib0092@outlook.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "datasets>=5.0.1",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "tokenizers>=0.23.2",
+    "torch>=2.14.0",
+    "transformers>=5.17.0",
+]
+
+[project.scripts]
+mini-ccgqa = "mini_ccgqa:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

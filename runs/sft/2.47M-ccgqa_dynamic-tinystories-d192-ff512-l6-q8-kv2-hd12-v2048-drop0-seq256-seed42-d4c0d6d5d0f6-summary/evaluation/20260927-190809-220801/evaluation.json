@@ -1,0 +1,17 @@
+{
+  "examples": 500,
+  "validation": "/Users/shoaibakhtar/Developer/mini-ccgqa/data/sft_summary_hf/valid.jsonl",
+  "val_sha256": "eba8b4169a6fc0ff9036dd2bee18b4377880f14353288451bed136b32f9642a7",
+  "num_generation_prompts": 20,
+  "tokenizer_sha256": "60ecf106e294757b8b0293afa9aceea8c97731b823873eeebba15a0b10bcd48d",
+  "checkpoints": {
+    "Base": {
+      "path": "/Users/shoaibakhtar/Developer/mini-ccgqa/runs/base/2.47M-ccgqa_dynamic-tinystories-d192-ff512-l6-q8-kv2-hd12-v2048-drop0-seq256-seed42-d4c0d6d5d0f6/best_model.pt",
+      "sha256": "301ec391448577dacbb86e46d6648e5854d5d7309b8e4fc77149ea8dffb56326"
+    },
+    "SFT": {
+      "path": "/Users/shoaibakhtar/Developer/mini-ccgqa/runs/sft/2.47M-ccgqa_dynamic-tinystories-d192-ff512-l6-q8-kv2-hd12-v2048-drop0-seq256-seed42-d4c0d6d5d0f6-summary/best_model.pt",
+      "sha256": "8eb94a31e359f650f24b402b028dc580339978fc0f9524a1eec9794930bde59c"
+    }
+  }
+}
