@@ -32,7 +32,7 @@ $$
 Causal attention computes
 
 $$
-A=\operatorname{softmax}\left(\frac{QK^\top}{\sqrt d}+M\right),
+A=\text{softmax}\left(\frac{QK^\top}{\sqrt d}+M\right),
 \qquad O=AV,
 $$
 
@@ -90,19 +90,19 @@ embeddings and feedforward layers are unchanged.
 Each block applies RMSNorm before attention and before the feedforward layer:
 
 $$
-x'=x+\operatorname{Attention}(\operatorname{RMSNorm}(x)),
+x'=x+\text{Attention}(\text{RMSNorm}(x)),
 $$
 
 $$
-x''=x'+\operatorname{FFN}(\operatorname{RMSNorm}(x')).
+x''=x'+\text{FFN}(\text{RMSNorm}(x')).
 $$
 
 RMSNorm rescales each token vector using its root mean square, with
 epsilon $10^{-5}$ and a learned scale per feature. The feedforward network is
 
 $$
-\operatorname{FFN}(u)=
-\left[\operatorname{SiLU}(uW_{\rm gate})\odot(uW_{\rm up})\right]W_{\rm down}.
+\text{FFN}(u)=
+\left[\text{SiLU}(uW_{\rm gate})\odot(uW_{\rm up})\right]W_{\rm down}.
 $$
 
 A final RMSNorm precedes the vocabulary projection. Input embeddings and
