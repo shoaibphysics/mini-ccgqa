@@ -76,8 +76,7 @@ and training setup differ.
 
 At fixed head counts and sequence length, halving $d$ halves the leading
 arithmetic in $QK^\top$ and $AV$. It also halves the logical KV-cache
-storage relative to full GQA, i.e. $
-\text{KV elements per layer}=2BTKd$ where $B$ is batch size and $T$ is the cached sequence length.
+storage relative to full GQA, i.e. $\text{KV elements per layer}=2BTKd$ where $B$ is batch size and $T$ is the cached sequence length.
 
 The attention matrix remains $T\times T$, so attention is still quadratic
 in sequence length. Total parameter savings are smaller than 50% because
@@ -224,23 +223,11 @@ token positions and batch examples, but not across different heads.
 
 The depthwise convolution computes
 
-$$
-u_{t,h,c}
-=
-a^{(h)}_{c,-1}z_{t-1,h,c}
-+
-a^{(h)}_{c,0}z_{t,h,c}
-+
-b^{\mathrm{depth}}_{h,c}.
-$$
+$$u_{t,h,c}=a^{(h)}_{c,-1}z_{t-1,h,c}+a^{(h)}_{c,0}z_{t,h,c}+b^{\mathrm{depth}}_{h,c}.$$
 
 For every channel $c$ of every head $h$, it learns two weights and one bias:
 
-$$
-a^{(h)}_{c,-1},\qquad
-a^{(h)}_{c,0},\qquad
-b^{\mathrm{depth}}_{h,c}.
-$$
+$$a^{(h)}_{c,-1},\qquad a^{(h)}_{c,0},\qquad b^{\mathrm{depth}}_{h,c}.$$
 
 The subscripts $-1$ and $0$ identify the previous-position and
 current-position coefficients. These parameters do not depend on $t$:
@@ -255,26 +242,11 @@ The implementation therefore uses 120 convolution groups, one per channel.
 
 The headwise convolution computes
 
-$$
-s_{t,h,c}
-=
-\sum_{j=1}^{d}
-\left[
-B^{(h)}_{-1,cj}u_{t-1,h,j}
-+
-B^{(h)}_{0,cj}u_{t,h,j}
-\right]
-+
-b^{\mathrm{head}}_{h,c}.
-$$
+$$s_{t,h,c}=\sum_{j=1}^{d}\left[B^{(h)}_{-1,cj}u_{t-1,h,j}+B^{(h)}_{0,cj}u_{t,h,j}\right]+b^{\mathrm{head}}_{h,c}.$$
 
 Each head has two learned mixing matrices and a bias vector:
 
-$$
-B^{(h)}_{-1},B^{(h)}_0\in\mathbb{R}^{d\times d},
-\qquad
-b^{\mathrm{head}}_h\in\mathbb{R}^{d}.
-$$
+$$B^{(h)}_{-1},B^{(h)}_0\in\mathbb{R}^{d\times d},\qquad b^{\mathrm{head}}_h\in\mathbb{R}^{d}.$$
 
 For output channel $c$, row $c$ of each matrix specifies how to combine
 the input channels $j$. Thus, the second convolution mixes both temporal
@@ -396,22 +368,7 @@ Let $x_{t,i}$ denote feature $i$ of the normalized hidden state entering
 attention at position $t$, where $i=1,\ldots,D$. For each KV group $j$,
 the model predicts two scalar gates:
 
-$$
-g^{r}_{t,j}
-=
-2\sigma\left(
-\sum_{i=1}^{D}
-\left[
-\alpha^{r}_{j,i}x_{t,i}
-+
-\beta^{r}_{j,i}x_{t-1,i}
-\right]
-+
-b^{r}_j
-\right),
-\qquad
-r\in\{\mathrm{past},\mathrm{current}\}.
-$$
+$$g^{r}_{t,j}=2\sigma\left(\sum_{i=1}^{D}\left[\alpha^{r}_{j,i}x_{t,i}+\beta^{r}_{j,i}x_{t-1,i}\right]+b^{r}_j\right),\qquad r\in\{\mathrm{past},\mathrm{current}\}.$$
 
 The learned weights $\alpha$ and $\beta$ read the current and previous
 hidden states, respectively. The sum runs over hidden features, not
@@ -435,19 +392,7 @@ the key head belonging to its group. The gates do not act on V.
 
 Using the notation of Section 4, the first convolution becomes
 
-$$
-u_{t,h,c}
-=
-a^{(h)}_{c,-1}
-g^{\mathrm{past}}_{t,j(h)}
-z_{t-1,h,c}
-+
-a^{(h)}_{c,0}
-g^{\mathrm{current}}_{t,j(h)}
-z_{t,h,c}
-+
-b^{\mathrm{depth}}_{h,c}.
-$$
+$$u_{t,h,c}=a^{(h)}_{c,-1}g^{\mathrm{past}}_{t,j(h)}z_{t-1,h,c}+a^{(h)}_{c,0}g^{\mathrm{current}}_{t,j(h)}z_{t,h,c}+b^{\mathrm{depth}}_{h,c}.$$
 
 Here $h$ identifies a query or key head, $c$ a channel within it, and
 $j(h)$ its KV group. Each channel retains its own learned convolution
@@ -492,13 +437,7 @@ Each gate has $D$ weights for the current hidden state, $D$ for the
 previous state, and one bias. With two gates per KV group, six layers,
 $K=2$ and $D=192$, the additional parameter count is
 
-$$
-6(2K)(2D+1)
-=
-6\cdot4\cdot385
-=
-9,240,
-$$
+$$6(2K)(2D+1)=6\cdot 4\cdot 385 = 9,240,$$
 
 approximately 0.375% of static CCGQA.
 
@@ -598,11 +537,7 @@ of the quality lost through compression, while a gap to full GQA remains.
 For a candidate model $A$ and reference model $B$, we report relative
 perplexity reduction as
 
-$$
-100\left(1-\frac{\mathrm{PPL}_A}{\mathrm{PPL}_B}\right)
-=
-100\left(1-e^{L_A-L_B}\right).
-$$
+$$100\left(1-\frac{\mathrm{PPL}_A}{\mathrm{PPL}_B}\right)=100\left(1-e^{L_A-L_B}\right).$$
 
 Positive values indicate improvement over the reference.
 
@@ -671,13 +606,7 @@ Each summary is formatted as
 The model reads the prompt as context, but the loss is computed only
 over story tokens and EOS. Prompt and padding positions are excluded:
 
-$$
-L_{\mathrm{SFT}}
-=
--\frac{1}{N_{\mathrm{response}}}
-\sum_{\text{response positions }t}
-\log p_\theta(y_t\mid\text{prompt},y_{<t}).
-$$
+$$L_{\mathrm{SFT}}=-\frac{1}{N_{\mathrm{response}}}\sum_{\text{response positions }t}\log p_\theta(y_t\mid\text{prompt},y_{<t}).$$
 
 [sft.py](../src/mini_ccgqa/sft.py) updates all model weights,
 without LoRA or other adapters. Training examples are shuffled each
@@ -702,13 +631,7 @@ We report response cross-entropy, perplexity and **next-token accuracy**.
 Accuracy measures how often the model's highest-probability token matches
 the reference next token:
 
-$$
-\mathrm{Accuracy}
-=
-100\times
-\frac{\text{correct top-1 response-token predictions}}
-{\text{total response-token targets}}.
-$$
+$$\mathrm{Accuracy}=100\times\frac{\text{correct top-1 response-token predictions}}{\text{total response-token targets}}.$$
 
 The count includes story tokens and EOS, excludes prompt and padding
 positions, and is accumulated across all validation examples. It measures
