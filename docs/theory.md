@@ -117,15 +117,15 @@ This tied matrix contains $2048\times192=393,216$ parameters, approximately
 ### Q/K normalization and learned scale
 
 Input RMSNorm does not control the lengths of the projected Q/K vectors.
-Because $q^\top k=\|q\|_2\|k\|_2\cos\phi$, attention scores can grow through
+Because $q^\top k=|q|_2|k|_2\cos\phi$, attention scores can grow through
 vector magnitude as well as alignment.
 
 All four models normalize each Q/K head as
 
 $$
-\widehat q=\sqrt d\,\frac{q}{\max(\|q\|_2,\epsilon)},
+\widehat q=\sqrt{d}\frac{q}{\max(\|q\|_2,\epsilon)},
 \qquad
-\widehat k=\sqrt d\,\frac{k}{\max(\|k\|_2,\epsilon)},
+\widehat k=\sqrt{d}\frac{k}{\max(\|k\|_2,\epsilon)},
 $$
 
 where $\epsilon$ is the floating-point dtype's epsilon. This follows the
@@ -152,11 +152,7 @@ while Q/K gradients through the score path are initially zero.
 
 RoPE rotates coordinate pairs according to position:
 
-$$
-(a',b')=
-(a\cos(t\omega)-b\sin(t\omega),\;
- a\sin(t\omega)+b\cos(t\omega)).
-$$
+$$(a',b')=(a\cos(t\omega)-b\sin(t\omega), a\sin(t\omega)+b\cos(t\omega)).$$
 
 Following [ZAYA's half-head RoPE](https://arxiv.org/pdf/2605.05365v1#page=6),
 we rotate half the coordinates of each Q/K head. For $d=12$, the pairs
@@ -368,7 +364,7 @@ Let $x_{t,i}$ denote feature $i$ of the normalized hidden state entering
 attention at position $t$, where $i=1,\ldots,D$. For each KV group $j$,
 the model predicts two scalar gates:
 
-$$g^{r}_{t,j}=2\sigma\left(\sum_{i=1}^{D}\left[\alpha^{r}_{j,i}x_{t,i}+\beta^{r}_{j,i}x_{t-1,i}\right]+b^{r}_j\right),\qquad r\in\{\mathrm{past},\mathrm{current}\}.$$
+$$g^{r}_{t,j}=2\sigma\left(\sum_{i=1}^{D}\left[\alpha^{r}_{j,i}x_{t,i}+\beta^{r}_{j,i}x_{t-1,i}\right]+b^{r}_j\right),\qquad r\in\lbrace\mathrm{past},\mathrm{current}\rbrace.$$
 
 The learned weights $\alpha$ and $\beta$ read the current and previous
 hidden states, respectively. The sum runs over hidden features, not
