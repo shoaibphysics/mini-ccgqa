@@ -161,13 +161,13 @@ Summary: Dave goes on a mission to his neighbor's garden to find delicious veget
 Story:
 ```
 
-**Before SFT — base Dynamic CCGQA**
+**Before SFT: base Dynamic CCGQA**
 
 ```text
 The moral of the story is that it's important to be careful and listen to your friends.
 ```
 
-**After SFT — Dynamic CCGQA**
+**After SFT: Dynamic CCGQA**
 
 ```text
 Once upon a time, there was a little boy named Jack. Jack was very excited because he had a special toy. He was very excited because he had never seen anything like it before.
